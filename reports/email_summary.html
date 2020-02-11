@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head><title>Summary Report</title>
+    <meta charset="utf-8"/>
+</head>
+<body><h4>API PERFORMANCE STATISTICS</h4>
+<blockquote>
+    <table border=1 frame=void rules=cells style="font-size: 14px;width: 100%;border-spacing: 2px;border-style: solid; border-color:black;">
+        <thead style="width: 100%;border-spacing: 2px;border-color:black;">
+        <tr>
+            <th colspan="11"
+                style="font-size: 14px;border: 1px solid #000000 !important;text-align: center; padding: 8px;background-color: #FFFFFF;color: #000;">
+                STATISTICS FOR 05, FEB 2020
+            </th>
+        </tr>
+        <tr>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                Method
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                Name
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                # requests
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                # failures
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                Average response time
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                Min response time
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                Max response time
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                Requests/s
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                90%
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                95%
+            </th>
+            <th style="font-size: 14px;border: 1px solid #000000 !important;text-align: left; padding: 8px;background-color: #FFFFFF;color: #000;">
+                99%
+            </th>
+        </tr>
+        </thead>
+        <tbody style="font-size: 14px;">
+        <tr style="width: 100%;border: 1px solid #000000 !important;background-color:#FFFFFF;">
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">POST</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">/api?service=flow&amp;action=get_all_segments</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">78</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">39</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">651</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">219</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">832</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">2.91</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">740</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">740</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">830</td>
+        </tr>
+        <tr style="width: 100%;border: 1px solid #000000 !important;background-color:#FFFFFF;">
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">POST</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">/api?service=security&amp;action=login
+            </td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">20</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">10</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">712</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">351</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">922</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">0.75</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">920</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">920</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">920</td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr style="width: 100%;border-spacing: 2px;background-color:#FFFFFF !important">
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">None</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">Total</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">98</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">49</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">663</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">219</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">922</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">3.65</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">850</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">850</td>
+            <td style="border-collapse:collapse;text-align: left; padding: 8px">920</td>
+        </tr>
+        </tfoot>
+    </table>
+</blockquote>
+</body>
+</html>

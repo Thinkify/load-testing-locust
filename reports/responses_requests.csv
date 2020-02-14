@@ -1,4 +1,0 @@
-Method,Name, , , ,# requests,# failures,Median response time,Average response time,Min response time,Max response time,Average Content Size,Requests/s
-POST,/api?service=flow&action=get_all_segments, , , ,78,39,720,651,219,832,27,2.91
-POST,/api?service=security&action=login, , , ,20,10,840,712,351,922,30,0.75
-None,Total, , , ,98,49,720,663,219,922,27,3.65

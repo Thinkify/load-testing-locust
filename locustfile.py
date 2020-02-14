@@ -17,5 +17,5 @@ locust.stats.CSV_STATS_INTERVAL_SEC = 1
 
 class GeneralTests(HttpLocust):
     task_set = general_tests.GeneralRequests
-    host = "http://172.18.96.3:8088/"
+    host = None  # hostname
     wait_time = between(1, 5)

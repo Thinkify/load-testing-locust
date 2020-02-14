@@ -1,4 +1,0 @@
-Name, , , ,# requests,50%,66%,75%,80%,90%,95%,98%,99%,100%
-POST /api?service=flow&action=get_all_segments, , , ,78,720,730,730,730,740,740,830,830,830
-POST /api?service=security&action=login, , , ,20,850,850,850,880,920,920,920,920,920
-Total, , , ,98,720,730,740,740,850,850,920,920,920

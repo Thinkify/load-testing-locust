@@ -1,6 +1,6 @@
 # Load Testing Framework Using Locust
 
-##Setup
+## Setup
 Locust is supported on Python 3.6, 3.7 and 3.8.
 
 1. Clone the repo.
@@ -15,9 +15,9 @@ Locust is supported on Python 3.6, 3.7 and 3.8.
 
         pip3 install -r requirements.txt
 
-##Usage
+## Usage
 
-####Web UI
+#### Web UI
 Run `locust` command from project root. The web interface should start at localhost:8089. Open this page and specify number of users, hatch rate and host name before starting the test.
 
 #### Command Line

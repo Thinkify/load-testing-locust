@@ -9,7 +9,7 @@ Locust is supported on Python 3.6, 3.7 and 3.8.
 
 2. Run:
 
-        ./setup.sh
+        . setup.sh
 
     This takes care of creating a virtualenv, installing all requirements and setting up pre-commit hooks.
 

@@ -18,7 +18,8 @@ class RequestDescriptor:
         jenkins_logs = open(jenkins_logs)
         if not os.path.exists('reports'):
             os.makedirs('reports')
-        generated_logs = open(os.path.join('reports', 'request_time_logs.txt'), 'w')
+        generated_logs = open(os.path.join('reports', 'request_time_logs.txt'),
+                              'w')
         pattern = r'Name[^\r\n]+((\r|\n|\r\n)[^\r\n]+)*Total(.*)'
         regex = re.compile(pattern, re.IGNORECASE)
         for match in regex.finditer(jenkins_logs.read()):
@@ -30,16 +31,19 @@ class RequestDescriptor:
     def create_dict_for_api_time_graph(self):
         api_list = []
         time_graph_dict = {}
-        with open(os.path.join('reports', 'request_time_logs.txt'), 'rU') as file_data:
+        with open(os.path.join('reports', 'request_time_logs.txt'), 'rU') \
+                as file_data:
             for line in file_data:
                 line = line.split()
                 if line[0] == 'POST' and len(line) <= 10:
                     api_list.append(line[1])
-                # api_list = list(set(api_list)) #Checking if this is part of the issue
+                # api_list = list(set(api_list)) #Checking if this is part of
+                # the issue
         for api in api_list:
             request_rates = []
             time_graph_dict[api] = request_rates
-            with open(os.path.join('reports', 'request_time_logs.txt'), 'rU') as file_data:
+            with open(os.path.join('reports', 'request_time_logs.txt'),
+                      'rU') as file_data:
                 for line in file_data:
                     line = line.split()
                     if line[0] == 'POST' and len(line) == 10 and line[1] == api:
@@ -50,8 +54,10 @@ class RequestDescriptor:
 class CSVUtil:
 
     def create_csv_for_graph(self, time_graph_dict):
-        with open(os.path.join('reports', 'request_time_data.csv'), 'w') as csvfile:
-            filewriter = csv.writer(csvfile, delimiter=',', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        with open(os.path.join('reports', 'request_time_data.csv'),
+                  'w') as csvfile:
+            filewriter = csv.writer(csvfile, delimiter=',', quotechar='|',
+                                    quoting=csv.QUOTE_MINIMAL)
             headings = ['Seconds']
             apis_list = list(time_graph_dict.keys())
             headings = headings + apis_list
@@ -81,11 +87,13 @@ class CSVUtil:
 
 class FiguresGenerator:
     def time_graph_for_requests_throughput(self, time_graph_dict):
-        data_file = pd.read_csv(os.path.join('reports', 'request_time_data.csv'))
+        data_file = pd.read_csv(
+            os.path.join('reports', 'request_time_data.csv'))
         data = []
         plotting_color_count = len(list(time_graph_dict.keys()))
-        color = ["#" + ''.join([random.choice('0123456789ABCDEF') for j in range(6)])
-                 for i in range(plotting_color_count)]
+        color = [
+            "#" + ''.join([random.choice('0123456789ABCDEF') for j in range(6)])
+            for i in range(plotting_color_count)]
         for value in list(time_graph_dict.keys()):
             trace = go.Scatter(
                 x=data_file.Seconds,
@@ -96,13 +104,17 @@ class FiguresGenerator:
             plotting_color_count = plotting_color_count - 1
             data.append(trace)
         layout = dict(
-            title="Throughput Graph for " + datetime.date.today().strftime('%d, %b %Y'),
-            xaxis=dict(title='Time in Seconds', range=[0, len(time_graph_dict.get(list(time_graph_dict.keys())[0]))]),
+            title="Throughput Graph for " + datetime.date.today().strftime(
+                '%d, %b %Y'),
+            xaxis=dict(title='Time in Seconds', range=[0, len(
+                time_graph_dict.get(list(time_graph_dict.keys())[0]))]),
             yaxis=dict(title='Requests Count')
         )
         fig = dict(data=data, layout=layout)
-        # plotly.offline.plot(fig, filename='reports//request_time.html', auto_open=False)
-        return plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
+        # plotly.offline.plot(fig, filename='reports//request_time.html',
+        # auto_open=False)
+        return plotly.offline.plot(fig, include_plotlyjs=False,
+                                   output_type='div')
 
     def time_graph_for_requests_completion(self):
         xaxis_data = []
@@ -130,48 +142,65 @@ class FiguresGenerator:
                     trace.append(trace_data)
         layout = go.Layout(
             barmode='group',
-            title="Requests Distribution Graph for " + datetime.date.today().strftime('%d, %b %Y'),
+            title="Requests Distribution Graph for "
+            + datetime.date.today().strftime('%d, %b %Y'),
             xaxis=dict(title='Requests Completed(%)'),
             yaxis=dict(title='Time(ms)')
         )
         fig = go.Figure(data=trace, layout=layout)
-        return plotly.offline.plot(fig, include_plotlyjs=False, output_type='div')
+        return plotly.offline.plot(fig, include_plotlyjs=False,
+                                   output_type='div')
 
     def create_table_from_csv(self, filename):
         df = pd.read_csv(os.path.join('reports', filename + '.csv'))
         df_external_source = FF.create_table(df.head(), height_constant=40)
-        return plotly.offline.plot(df_external_source, include_plotlyjs=False, output_type='div')
+        return plotly.offline.plot(df_external_source, include_plotlyjs=False,
+                                   output_type='div')
 
 
 class ReportGenerator:
 
-    def create_dashboard(self, div_for_throughput, div_for_throughput_graph, div_for_distribution,
+    def create_dashboard(self, div_for_throughput, div_for_throughput_graph,
+                         div_for_distribution,
                          div_for_distribution_graph):
-        shutil.copy(os.path.join('reports', 'templates', 'dashboard_template.html'),
-                    os.path.join('reports', 'dashboard_summary.html'))
-        update_data = div_for_throughput + '\n' + div_for_throughput_graph + '\n' + div_for_distribution + '\n' + div_for_distribution_graph
-        with open(os.path.join('reports', 'dashboard_summary.html'), 'r') as file:
+        shutil.copy(
+            os.path.join('reports', 'templates', 'dashboard_template.html'),
+            os.path.join('reports', 'dashboard_summary.html'))
+        update_data = div_for_throughput + '\n' \
+            + div_for_throughput_graph \
+            + '\n' + div_for_distribution + '\n' \
+            + div_for_distribution_graph
+        with open(os.path.join('reports', 'dashboard_summary.html'),
+                  'r') as file:
             filedata = file.read()
         filedata = filedata.replace('{{div_data}}', update_data)
-        with open(os.path.join('reports', 'dashboard_summary.html'), 'w') as file:
+        with open(os.path.join('reports', 'dashboard_summary.html'),
+                  'w') as file:
             file.write(filedata)
         self.manipulate_html_dashboard()
 
     def manipulate_html_dashboard(self):
-        with open(os.path.join('reports', 'dashboard_summary.html'), 'r') as file:
+        with open(os.path.join('reports', 'dashboard_summary.html'),
+                  'r') as file:
             filedata = file.read()
         pattern = r'<b> .[0-9]<\/b>'
         regex = re.compile(pattern, re.IGNORECASE)
         for match in regex.finditer(filedata):
             match.start()
             filedata = filedata.replace(match.group(0), '<b> </b>')
-        filedata = filedata.replace('Median response time', 'Median <br>response <br>time')
-        filedata = filedata.replace('Average response time', 'Average <br>response <br>time')
-        filedata = filedata.replace('Min response time', 'Min <br>response <br>time')
-        filedata = filedata.replace('Max response time', 'Max <br>response <br>time')
-        filedata = filedata.replace('Average Content Size', 'Average <br>Content <br>Size')
+        filedata = filedata.replace('Median response time',
+                                    'Median <br>response <br>time')
+        filedata = filedata.replace('Average response time',
+                                    'Average <br>response <br>time')
+        filedata = filedata.replace('Min response time',
+                                    'Min <br>response <br>time')
+        filedata = filedata.replace('Max response time',
+                                    'Max <br>response <br>time')
+        filedata = filedata.replace('Average Content Size',
+                                    'Average <br>Content <br>Size')
         filedata = filedata.replace('"showLink": true', '"showLink": false')
-        with open(os.path.join('reports', 'dashboard_summary.html'), 'w') as file:
+        with open(os.path.join('reports', 'dashboard_summary.html'),
+                  'w') as file:
             file.write(filedata)
 
     def get_email_template_src(self):
@@ -186,88 +215,167 @@ class ReportGenerator:
                 with tag('h4'):
                     text('APIs STATISTICS')
                 with tag('blockquote'):
-                    with tag('table', style='font-size: 12px;width: 100%;border-spacing: 2px;border-color:grey'):
-                        with tag('thead', style="width: 100%;border-spacing: 2px;border-color:grey"):
+                    with tag('table',
+                             style='font-size: 12px;width: 100%;'
+                                   'border-spacing: 2px;border-color:grey'):
+                        with tag('thead',
+                                 style="width: 100%;border-spacing: 2px;"
+                                       "border-color:grey"):
                             with tag('tr'):
                                 with tag('th', colspan='11',
-                                         style='font-size: 14px;border: 1px #6ea1cc !important;text-align: center; padding: 8px;background-color: #508abb;color: #fff;'):
-                                    text('STATISTICS FOR ' + datetime.date.today().strftime('%d, %b %Y'))
+                                         style='font-size: 14px;'
+                                               'border: 1px #6ea1cc !important;'
+                                               'text-align: center; '
+                                               'padding: 8px;'
+                                               'background-color: #508abb;'
+                                               'color: #fff;'):
+                                    text(
+                                        'STATISTICS FOR '
+                                        + datetime.date.today().strftime(
+                                            '%d, %b %Y'))
                             with tag('tr'):
                                 with open('responses_requests.csv') as csv_file:
-                                    csv_reader = csv.reader(csv_file, delimiter=',')
+                                    csv_reader = csv.reader(csv_file,
+                                                            delimiter=',')
                                     line_count = 0
                                     for row in csv_reader:
                                         for elements in range(0, len(row)):
                                             if elements in [4, 8]:
                                                 continue
                                             with tag('th',
-                                                     style='font-size: 14px;border: 1px #6ea1cc !important;text-align: left; padding: 8px;background-color: #508abb;color: #fff;'):
+                                                     style='font-size: '
+                                                           '14px;border: 1px '
+                                                           '#6ea1cc '
+                                                           '!important;text'
+                                                           '-align: left; '
+                                                           'padding: '
+                                                           '8px;background'
+                                                           '-color: '
+                                                           '#508abb;color: '
+                                                           '#fff;'):
                                                 text(row[elements])
                                         break
-                                with open('responses_distribution.csv') as csv_file:
-                                    csv_reader = csv.reader(csv_file, delimiter=',')
+                                with open(
+                                        'responses_distribution.csv') \
+                                        as csv_file:
+                                    csv_reader = csv.reader(csv_file,
+                                                            delimiter=',')
                                     line_count = 0
                                     for row in csv_reader:
                                         for elements in range(0, len(row)):
                                             if elements in [6, 7, 9]:
                                                 with tag('th',
-                                                         style='font-size: 14px;border: 1px #6ea1cc !important;text-align: left; padding: 8px;background-color: #508abb;color: #fff;'):
+                                                         style='font-size: '
+                                                               '14px;border: '
+                                                               '1px #6ea1cc '
+                                                               '!important'
+                                                               ';text-align: '
+                                                               'left; '
+                                                               'padding: '
+                                                               '8px'
+                                                               ';background'
+                                                               '-color: '
+                                                               '#508abb;color'
+                                                               ': #fff;'):
                                                     text(row[elements])
                                         break
                         with tag('tbody', style='font-size: 12px;'):
-                            with open('responses_requests.csv') as csv_file, open(
-                                    'responses_distribution.csv') as temp_csv_file:
+                            with open(
+                                    'responses_requests.csv') as csv_file, open(
+                                        'responses_distribution.csv') \
+                                    as temp_csv_file:
                                 csv_reader = csv.reader(csv_file, delimiter=',')
-                                temp_csv_reader = list(csv.reader(temp_csv_file, delimiter=','))
+                                temp_csv_reader = list(
+                                    csv.reader(temp_csv_file, delimiter=','))
                                 line_count = 0
                                 temp_line_count = 0
                                 counter = 0
                                 for row in csv_reader:
                                     temp_row = temp_csv_reader[counter]
                                     counter = counter + 1
-                                    if line_count == 0 or row[0] == 'None' or temp_line_count == 0 or temp_row[
-                                        0] == 'Total':
+                                    if line_count == 0 or row[0] == 'None' \
+                                            or temp_line_count == 0 or \
+                                            temp_row[0] == 'Total':
                                         line_count = line_count + 1
                                         temp_line_count = temp_line_count + 1
                                         continue
                                     else:
                                         with tag('tr',
-                                                 style='width: 100%;border-bottom:1px solid #efefef;border-top:1px solid #ececec;background-color:#f4fbff;'):
+                                                 style='width: 100%;'
+                                                       'border-bottom:1px solid'
+                                                       ' #efefef;'
+                                                       'border-top:1px solid '
+                                                       '#ececec;'
+                                                       'background-color'
+                                                       ':#f4fbff;'):
                                             for elements in range(0, len(row)):
                                                 if elements in [4, 8]:
                                                     continue
                                                 with tag('td',
-                                                         style='border-collapse:collapse;text-align: left; padding: 8px'):
+                                                         style='border'
+                                                               '-collapse'
+                                                               ':collapse'
+                                                               ';text-align: '
+                                                               'left; '
+                                                               'padding: 8px'):
                                                     text(row[elements])
-                                            for temp_elements in range(0, len(temp_row)):
+                                            for temp_elements in range(0, len(
+                                                    temp_row)):
                                                 if temp_elements in [6, 7, 9]:
                                                     with tag('td',
-                                                             style='border-collapse:collapse;text-align: left; padding: 8px'):
-                                                        text(temp_row[temp_elements])
+                                                             style='border'
+                                                                   '-collapse'
+                                                                   ':collapse'
+                                                                   ';text'
+                                                                   '-align: '
+                                                                   'left; '
+                                                                   'padding: '
+                                                                   '8px'):
+                                                        text(temp_row[
+                                                            temp_elements])
 
                         with tag('tfoot'):
-                            with open('responses_requests.csv') as csv_file, open(
-                                    'responses_distribution.csv') as temp_csv_file:
+                            with open('responses_requests.csv') as csv_file, \
+                                    open('responses_distribution.csv') \
+                                            as temp_csv_file:
                                 csv_reader = csv.reader(csv_file, delimiter=',')
-                                temp_csv_reader = list(csv.reader(temp_csv_file, delimiter=','))
+                                temp_csv_reader = list(
+                                    csv.reader(temp_csv_file, delimiter=','))
                                 counter = 0
                                 for row in csv_reader:
                                     temp_row = temp_csv_reader[counter]
                                     counter = counter + 1
                                     if row[0] == 'None':
                                         with tag('tr',
-                                                 style='width: 100%;border-spacing: 2px;background-color:#fcffc9 !important'):
+                                                 style='width: '
+                                                       '100%;border-spacing: '
+                                                       '2px;background-color'
+                                                       ':#fcffc9 !important'):
                                             for elements in range(0, len(row)):
                                                 if elements in [4, 8]:
                                                     continue
                                                 with tag('td',
-                                                         style='border-collapse:collapse;text-align: left; padding: 8px'):
+                                                         style='border'
+                                                               '-collapse'
+                                                               ':collapse'
+                                                               ';text-align: '
+                                                               'left; '
+                                                               'padding: 8px'):
                                                     text(row[elements])
-                                            for temp_elements in range(0, len(temp_row)):
+                                            for temp_elements in range(0, len(
+                                                    temp_row)):
                                                 if temp_elements in [6, 7, 9]:
                                                     with tag('td',
-                                                             style='border-collapse:collapse;text-align: left; padding: 8px'):
-                                                        text(temp_row[temp_elements])
+                                                             style='border'
+                                                                   '-collapse'
+                                                                   ':collapse'
+                                                                   ';text'
+                                                                   '-align: '
+                                                                   'left; '
+                                                                   'padding: '
+                                                                   '8px'):
+                                                        text(temp_row[
+                                                            temp_elements])
                                     else:
                                         continue
         return doc.getvalue()

@@ -3,22 +3,21 @@
 ## Setup
 Locust is supported on Python 3.6, 3.7 and 3.8.
 
-1. Clone the repo.
+1. Clone the repo and change directory to project root.
 
-        cd load_testing_locust
+        git clone https://github.com/Thinkify/load_testing_locust.git && cd load_testing_locust
 
-2. If using virtualenv(recommended):
+2. Run:
 
-        virtualenv .env && source .env/bin/activate && pip3 install -r requirements.txt
+        ./setup.sh
 
-3. Without virtualenv:
-
-        pip3 install -r requirements.txt
+    This takes care of creating a virtualenv, installing all requirements and setting up pre-commit hooks.
 
 ## Usage
 
 #### Web UI
-Run `locust` command from project root. The web interface should start at localhost:8089. Open this page and specify number of users, hatch rate and host name before starting the test.
+Run `locust` command from project root. The web interface should start at localhost:8089. 
+Open this page in a browser and specify number of users, hatch rate and host name before starting the test.
 
 #### Command Line
 Run the following command to start locust without the web UI:

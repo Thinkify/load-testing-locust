@@ -1,20 +1,27 @@
 """
-    Test File where the tests have to be written.
+Test File where the tasks are specified for the HTTPUser class 'GeneralTests'.
 """
 
-from locust import TaskSequence, seq_task
-
 import json
+
+from locust import SequentialTaskSet, task
+
 import packages.locust_util as utility
 import packages.models as model
 import packages.requests_handler as http_request
 
 
-class GeneralRequests(TaskSequence):
+class GeneralRequests(SequentialTaskSet):
+    """
+    Sequential tasks
+    """
     connection_id = []
 
-    @seq_task(1)
+    @task
     def login(self):
+        """
+        Login API task
+        """
         request = model.RequestModel('LOGIN')
         response = http_request.make_post_request(self.client, request)
         if response.status_code == 200:
@@ -23,8 +30,11 @@ class GeneralRequests(TaskSequence):
             response.failure(response.json())
 
     # Create connection test
-    @seq_task(2)
+    @task
     def connect_connection(self):
+        """
+        Connect Connection API task
+        """
         request = model.RequestModel('CONNECT_CONNECTION')
         request.body["config"] = json.dumps(request.body["config"])
         response = http_request.make_post_request(self.client, request)
@@ -34,8 +44,11 @@ class GeneralRequests(TaskSequence):
             response.failure('Connect connection failed')
 
     # Create connection test
-    @seq_task(3)
+    @task
     def create_connection(self):
+        """
+        Create Connection API task
+        """
         request = model.RequestModel('CREATE_CONNECTION')
         request.body['name'] = utility.unique_name()
         request.body["metadata"] = json.dumps(request.body["metadata"])
@@ -48,8 +61,11 @@ class GeneralRequests(TaskSequence):
         else:
             response.failure('Create connection failed')
 
-    @seq_task(4)
+    @task
     def delete_connection(self):
+        """
+        Delete Connection API task
+        """
         request = model.RequestModel('DELETE_CONNECTION')
         request.body['ids'] = json.dumps(self.connection_id)
         response = http_request.make_post_request(self.client, request)
@@ -57,4 +73,3 @@ class GeneralRequests(TaskSequence):
             response.success()
         else:
             response.failure('Delete connection failed')
-

@@ -1,15 +1,15 @@
-import re
-import os
 import csv
-import plotly
-import random
-import shutil
 import datetime
-import fileinput
+import os
+import random
+import re
+import shutil
+
 import pandas as pd
-from yattag import Doc
-import plotly.graph_objs as go
+import plotly
 import plotly.figure_factory as FF
+import plotly.graph_objs as go
+from yattag import Doc
 
 
 class RequestDescriptor:

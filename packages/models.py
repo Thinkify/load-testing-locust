@@ -1,11 +1,15 @@
 """
-    Use this file to set which requests file has to be used.
+    Defines the API request models
 """
 
 import yaml
 
 
 class RequestModel:
+    """
+    Loads the requests description from the specified data file and sets
+    type, endpoint, body and headers for an API
+    """
 
     def __init__(self, endpoint_name):
         self.__request_name = endpoint_name
@@ -20,6 +24,11 @@ class RequestModel:
 
     @property
     def type(self):
+        """
+        type of HTTP method
+        Returns HTTP method type specified in data file
+        -------
+        """
         return self._type
 
     @type.setter
@@ -28,6 +37,11 @@ class RequestModel:
 
     @property
     def endpoint(self):
+        """
+        Endpoint of API request
+        Returns endpoint specified in data file
+        -------
+        """
         return self._endpoint
 
     @endpoint.setter
@@ -36,6 +50,11 @@ class RequestModel:
 
     @property
     def body(self):
+        """
+        Body of API request
+        Returns body specified in data file
+        -------
+        """
         return self._body
 
     @body.setter
@@ -44,6 +63,11 @@ class RequestModel:
 
     @property
     def headers(self):
+        """
+        Headers of API request
+        Returns headers specified in data file
+        -------
+        """
         return self._headers
 
     @headers.setter

@@ -1,4 +1,4 @@
-REQUESTS_DESCRIPTION :
+REQUESTS_DESCRIPTION:
 
   #Login
   LOGIN:
@@ -7,18 +7,18 @@ REQUESTS_DESCRIPTION :
     HEADERS:
       Content-Type: application/x-www-form-urlencoded
       Accept: application/json
-    BODY :
+    BODY:
       username: #username
       password: #password
 
   # Connect a connection
-  CONNECT_CONNECTION :
+  CONNECT_CONNECTION:
     TYPE: POST
     ENDPOINT: callosum/v1/connection/connect
     HEADERS:
       Content-Type: application/x-www-form-urlencoded
       Accept: application/json
-    BODY :
+    BODY:
       type: RDBMS_SNOWFLAKE
       config: #Config for snowflake connection
 
@@ -29,12 +29,12 @@ REQUESTS_DESCRIPTION :
     HEADERS:
       Content-Type: application/x-www-form-urlencoded
       Accept: application/json
-    BODY :
+    BODY:
       name: test
       description: test
       type: RDBMS_SNOWFLAKE
       metadata:
-        # metadata for create connection
+      # metadata for create connection
 
   # Delete Connection
   DELETE_CONNECTION:

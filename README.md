@@ -21,7 +21,7 @@ Locust is supported on Python 3.6, 3.7 and 3.8.
 Run `locust` command from project root. The web interface should start at localhost:8089. Open this page and specify number of users, hatch rate and host name before starting the test.
 
 #### Command Line
-Run the following command to start locust with the web UI:
+Run the following command to start locust without the web UI:
     
     locust --host <hostname> -u <number of total users> -r <hatch rate> -t <run time> --headless
 
